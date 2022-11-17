@@ -2,7 +2,39 @@ version: '3'
 
 services:
 
-  tomcat-db-api:
-    image: your_image_name
+  db:
+    image: postgres:13.1-alpine
+
+    healthcheck:
+      test: ["CMD", "pg_isready", "-q", "-d", "postgres", "-U", "postgres"]
+      timeout: 45s
+      interval: 10s
+      retries: 5
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=pele
+      - POSTGRES_DB=city_db
+      - POSTGRES_HOST_AUTH_METHOD=trust
     ports:
-       - "8080:8080"
+      - "5432:5432"
+    expose:
+      - "5433"
+    container_name: assignment1-db
+
+
+  server:
+    build: ./server/assignment-1
+    container_name: server
+    image: server:latest
+    restart: always
+    ports:
+      - 8082:8082
+    depends_on:
+      - db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/city_db
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=pele
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+
