@@ -59,7 +59,7 @@ class DeviceForm extends React.Component {
                 },
                 consumption: {
                     value: '',
-                    placeholder: 'Age...',
+                    placeholder: 'Consumption...',
                     valid: false,
                     touched: false,
                 }

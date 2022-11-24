@@ -151,7 +151,8 @@ class MeasurementForm extends React.Component {
     }
     handleSubmitUpdate() {
         let measurement = {
-            timestamp: this.state.formControls.timestamp.value,
+            timeofmeasure: this.state.formControls.timeofmeasure.value,
+            dateofmeasure: this.state.formControls.dateofmeasure.value,
             energyConsumption: this.state.formControls.energyConsumption.value
         };
         let id={
@@ -185,7 +186,7 @@ class MeasurementForm extends React.Component {
                 <FormGroup id='timeofmeasure'>
                     <Label for='timeofmeasureField'> timeofmeasure: </Label>
                     <Input name='timeofmeasure' id='timeofmeasureField' placeholder={this.state.formControls.timeofmeasure.placeholder}
-                           type="time"
+                           type="text"
                            onChange={this.handleChange}
                            defaultValue={this.state.formControls.timeofmeasure.value}
                            touched={this.state.formControls.timeofmeasure.touched? 1 : 0}
