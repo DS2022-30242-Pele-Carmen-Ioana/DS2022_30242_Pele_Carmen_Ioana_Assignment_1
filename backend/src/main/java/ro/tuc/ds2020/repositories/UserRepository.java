@@ -9,9 +9,9 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface UserRepository extends JpaRepository<Users, UUID> {
-    @Query(value = "SELECT  u.name, u.age, u.address, u.role FROM Users u ")
+    @Query(value = "SELECT  u.firstname, u.age, u.address, u.role FROM Users u ")
     List<Users> findAllUsers();
-    List<Users> findByName(String name);
+    List<Users> findByFirstname(String firstname);
     Optional<Users> findUsersByUsername(String username);
     Optional<Users> findById(UUID user);
     Users getUsersByUsername(String username);

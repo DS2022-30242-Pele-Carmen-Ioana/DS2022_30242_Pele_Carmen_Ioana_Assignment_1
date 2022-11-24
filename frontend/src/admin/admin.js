@@ -11,6 +11,8 @@ const backgroundStyle = {
     width: "100%",
     height: "3000px",
     color:'white',
+    size: '4',
+    offset: 3,
     backgroundImage: `url(${BackgroundImg})`
 };
 
@@ -25,16 +27,17 @@ class Admin extends React.Component{
         }
         return (
             <div className={styles.back}>
-                <Router >
-                    <div style={backgroundStyle}>
-                        <h1> Welcome Admin!</h1>
-                        <h3>{parsedItem.id}</h3>
+                <Router sm={{size: '4', offset: 1}}>
+                    <div style={backgroundStyle} >
                         <button><a href={"/admin/users"}>users</a> </button>
                         <button><a href={"/admin/device"}>devices</a> </button>
                         <button><a href={"/admin/mydevice"}>my devices</a> </button>
                         <button><a href={"/admin/measurements"}>measurements</a> </button>
                         <button><a href={"/admin/addDeviceToUser"}>add Device to User</a> </button>
-                        <DeviceUser />
+                        <br/>
+                        <br/>
+                        <h1> Welcome Admin!</h1>
+                        <h3>{parsedItem.id}</h3>
                     </div>
                 </Router>
             </div>

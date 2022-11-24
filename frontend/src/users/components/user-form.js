@@ -32,9 +32,19 @@ class UserForm extends React.Component {
                         isRequired: true
                     }
                 },
-                name: {
+                firstname: {
                     value: '',
-                    placeholder: 'What is your name?...',
+                    placeholder: 'What is your firstname?...',
+                    valid: false,
+                    touched: false,
+                    validationRules: {
+                        minLength: 3,
+                        isRequired: true
+                    }
+                },
+                lastname: {
+                    value: '',
+                    placeholder: 'What is your lastname?...',
                     valid: false,
                     touched: false,
                     validationRules: {
@@ -161,7 +171,8 @@ class UserForm extends React.Component {
     }
     handleSubmit() {
         let user = {
-            name: this.state.formControls.name.value,
+            firstname: this.state.formControls.firstname.value,
+            lastname: this.state.formControls.lastname.value,
             username: this.state.formControls.username.value,
             password: this.state.formControls.password.value,
             address: this.state.formControls.address.value,
@@ -174,7 +185,8 @@ class UserForm extends React.Component {
     }
     handleSubmitUpdate() {
         let user = {
-            name: this.state.formControls.name.value,
+            firstname: this.state.formControls.firstname.value,
+            lastname: this.state.formControls.lastname.value,
             username: this.state.formControls.username.value,
             password: this.state.formControls.password.value,
             address: this.state.formControls.address.value,
@@ -201,27 +213,33 @@ class UserForm extends React.Component {
             <div>
                 <FormGroup id='id'>
                     <Label for='idField'> ID: </Label>
-                    <Input name='id' id='idField' placeholder={this.state.formControls.name.placeholder}
+                    <Input name='id' id='idField' placeholder={this.state.formControls.id.placeholder}
                            onChange={this.handleChange}
-                           defaultValue={this.state.formControls.name.value}
-                           touched={this.state.formControls.name.touched? 1 : 0}
-                           valid={this.state.formControls.name.valid}
+                           defaultValue={this.state.formControls.id.value}
+                           touched={this.state.formControls.id.touched? 1 : 0}
+                           valid={this.state.formControls.id.valid}
                            required
                     />
-                    {this.state.formControls.name.touched && !this.state.formControls.name.valid &&
-                        <div className={"error-message row"}> * Name must have at least 3 characters </div>}
                 </FormGroup>
-                <FormGroup id='name'>
-                    <Label for='nameField'> Name: </Label>
-                    <Input name='name' id='nameField' placeholder={this.state.formControls.name.placeholder}
+                <FormGroup id='firstname'>
+                    <Label for='firstnameField'> FirstName: </Label>
+                    <Input name='firstname' id='firstnameField' placeholder={this.state.formControls.firstname.placeholder}
                            onChange={this.handleChange}
-                           defaultValue={this.state.formControls.name.value}
-                           touched={this.state.formControls.name.touched? 1 : 0}
-                           valid={this.state.formControls.name.valid}
+                           defaultValue={this.state.formControls.firstname.value}
+                           touched={this.state.formControls.firstname.touched? 1 : 0}
+                           valid={this.state.formControls.firstname.valid}
                            required
                     />
-                    {this.state.formControls.name.touched && !this.state.formControls.name.valid &&
-                    <div className={"error-message row"}> * Name must have at least 3 characters </div>}
+                </FormGroup>
+                <FormGroup id='lastname'>
+                    <Label for='lastnameField'> LastName: </Label>
+                    <Input name='lastname' id='lastnameField' placeholder={this.state.formControls.lastname.placeholder}
+                           onChange={this.handleChange}
+                           defaultValue={this.state.formControls.lastname.value}
+                           touched={this.state.formControls.lastname.touched? 1 : 0}
+                           valid={this.state.formControls.lastname.valid}
+                           required
+                    />
                 </FormGroup>
 
                 <FormGroup id='username'>
@@ -233,8 +251,6 @@ class UserForm extends React.Component {
                            valid={this.state.formControls.username.valid}
                            required
                     />
-                    {this.state.formControls.username.touched && !this.state.formControls.username.valid &&
-                    <div className={"error-message"}> Username incorrect</div>}
                 </FormGroup>
                 <FormGroup id='password'>
                     <Label for='passwordField'> Password: </Label>
@@ -245,8 +261,6 @@ class UserForm extends React.Component {
                            valid={this.state.formControls.password.valid}
                            required
                     />
-                    {this.state.formControls.password.touched && !this.state.formControls.password.valid &&
-                        <div className={"error-message"}> Password incorrect</div>}
                 </FormGroup>
 
                 <FormGroup id='address'>
@@ -284,7 +298,7 @@ class UserForm extends React.Component {
 
                     <Row>
                         <Col sm={{size: '4', offset: 8}}>
-                            <Button type={"submit"} disabled={!this.state.formIsValid} onClick={this.handleSubmit}>  Insert </Button>
+                            <Button type={"submit"} disabled={!this.state.formControls.firstname.valid || !this.state.formControls.lastname.valid || !this.state.formControls.username.valid || !this.state.formControls.password.valid || !this.state.formControls.age.valid || !this.state.formControls.role.valid || !this.state.formControls.address.valid} onClick={this.handleSubmit}>  Insert </Button>
                         </Col>
                         <Col sm={{size: '4', offset: 8}}>
                             <Button type={"submit"} disabled={!this.state.formIsValid} onClick={this.handleSubmitUpdate}> Update </Button>

@@ -41,7 +41,7 @@ class MeasurementForm extends React.Component {
                         isRequired: true
                     }
                 },
-                timestamp: {
+                timeofmeasure: {
                     value: '',
                     placeholder: 'timestamp...',
                     valid: false,
@@ -50,7 +50,7 @@ class MeasurementForm extends React.Component {
                         isRequired: true
                     }
                 },
-                datem: {
+                dateofmeasure: {
                     value: '',
                     placeholder: 'date...',
                     valid: false,
@@ -126,14 +126,28 @@ class MeasurementForm extends React.Component {
             }
         });
     }
+    addMeasurement(measurement){
+        return API_MEASUREMENTS.postMeasurement(measurement, (result, status, error) => {
+            if (result !== null && (status === 200 || status === 201)) {
+                console.log("Successfully inserted person with id: " + result);
+                this.reloadHandler();
+            } else {
+                this.setState(({
+                    errorStatus: status,
+                    error: error
+                }));
+            }
+        });
+    }
     handleSubmit() {
         let measurement = {
-            timestamp: this.state.formControls.timestamp.value,
+            timeofmeasure: this.state.formControls.timeofmeasure.value,
+            dateofmeasure: this.state.formControls.dateofmeasure.value,
             energyConsumption: this.state.formControls.energyConsumption.value
         };
 
         console.log(measurement);
-        this.registerMeasurement(measurement);
+        this.addMeasurement(measurement);
     }
     handleSubmitUpdate() {
         let measurement = {
@@ -167,38 +181,32 @@ class MeasurementForm extends React.Component {
                            valid={this.state.formControls.id.valid}
                            required
                     />
-                    {this.state.formControls.id.touched && !this.state.formControls.id.valid &&
-                        <div className={"error-message row"}> * Name must have at least 3 characters </div>}
                 </FormGroup>
-                <FormGroup id='timestamp'>
-                    <Label for='timestampField'> Name: </Label>
-                    <Input name='timestamp' id='timestampField' placeholder={this.state.formControls.timestamp.placeholder}
+                <FormGroup id='timeofmeasure'>
+                    <Label for='timeofmeasureField'> timeofmeasure: </Label>
+                    <Input name='timeofmeasure' id='timeofmeasureField' placeholder={this.state.formControls.timeofmeasure.placeholder}
                            type="time"
                            onChange={this.handleChange}
-                           defaultValue={this.state.formControls.timestamp.value}
-                           touched={this.state.formControls.timestamp.touched? 1 : 0}
-                           valid={this.state.formControls.timestamp.valid}
+                           defaultValue={this.state.formControls.timeofmeasure.value}
+                           touched={this.state.formControls.timeofmeasure.touched? 1 : 0}
+                           valid={this.state.formControls.timeofmeasure.valid}
                            required
                     />
-                    {this.state.formControls.timestamp.touched && !this.state.formControls.timestamp.valid &&
-                    <div className={"error-message row"}> * Name must have at least 3 characters </div>}
                 </FormGroup>
-                <FormGroup id='datem'>
-                    <Label for='datemField'> Name: </Label>
-                    <Input name='datem' id='datemField' placeholder={this.state.formControls.datem.placeholder}
+                <FormGroup id='dateofmeasure'>
+                    <Label for='dateofmeasureField'> dateofmeasure: </Label>
+                    <Input name='dateofmeasure' id='dateofmeasureField' placeholder={this.state.formControls.dateofmeasure.placeholder}
                            type="date"
                            onChange={this.handleChange}
-                           defaultValue={this.state.formControls.datem.value}
-                           touched={this.state.formControls.datem.touched? 1 : 0}
-                           valid={this.state.formControls.datem.valid}
+                           defaultValue={this.state.formControls.dateofmeasure.value}
+                           touched={this.state.formControls.dateofmeasure.touched? 1 : 0}
+                           valid={this.state.formControls.dateofmeasure.valid}
                            required
                     />
-                    {this.state.formControls.datem.touched && !this.state.formControls.datem.valid &&
-                        <div className={"error-message row"}> * Name must have at least 3 characters </div>}
                 </FormGroup>
 
                 <FormGroup id='energyConsumption'>
-                    <Label for='energyConsumptionField'> Username: </Label>
+                    <Label for='energyConsumptionField'> energy consumption: </Label>
                     <Input name='energyConsumption' id='energyConsumptionField' placeholder={this.state.formControls.energyConsumption.placeholder}
                            onChange={this.handleChange}
                            defaultValue={this.state.formControls.energyConsumption.value}
@@ -206,14 +214,12 @@ class MeasurementForm extends React.Component {
                            valid={this.state.formControls.energyConsumption.valid}
                            required
                     />
-                    {this.state.formControls.energyConsumption.touched && !this.state.formControls.energyConsumption.valid &&
-                    <div className={"error-message"}> Username incorrect</div>}
                 </FormGroup>
 
 
                     <Row>
                         <Col sm={{size: '4', offset: 8}}>
-                            <Button type={"submit"} disabled={!this.state.formIsValid} onClick={this.handleSubmit}>  Insert </Button>
+                            <Button type={"submit"} disabled={!this.state.formControls.timeofmeasure.valid || !this.state.formControls.dateofmeasure.valid  || !this.state.formControls.energyConsumption.valid} onClick={this.handleSubmit}>  Insert </Button>
                         </Col>
                         <Col sm={{size: '4', offset: 8}}>
                             <Button type={"submit"} disabled={!this.state.formIsValid} onClick={this.handleSubmitUpdate}> Update </Button>

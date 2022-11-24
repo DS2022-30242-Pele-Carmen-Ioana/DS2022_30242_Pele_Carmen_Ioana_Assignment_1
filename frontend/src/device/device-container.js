@@ -16,6 +16,8 @@ import * as API_DEVICES from "./api/device-api"
 import DeviceTable from "./components/device-table";
 import DeviceForm from "./components/device-form";
 
+import DeviceUser from "./device-user";
+
 
 
 class DeviceContainer extends React.Component {
@@ -91,6 +93,11 @@ class DeviceContainer extends React.Component {
                                 errorStatus={this.state.errorStatus}
                                 error={this.state.error}
                             />   }
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col sm={{size: '4', offset: 1, align:'center'}}>
+                            <DeviceUser />
                         </Col>
                     </Row>
                 </Card>

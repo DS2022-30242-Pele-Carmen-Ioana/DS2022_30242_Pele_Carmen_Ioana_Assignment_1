@@ -7,8 +7,9 @@ import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.sql.Time;
 import java.sql.Date;
+import java.sql.Time;
+import java.time.LocalDate;
 import java.util.UUID;
 @Getter
 @Setter
@@ -21,10 +22,10 @@ public class Measurements implements Serializable {
     @Type(type = "uuid-binary")
     private UUID id;
 
-    @Column(name="timestamp", nullable = false)
-    private Time timestamp;
-    @Column(name="datem", nullable = false)
-    private Date datem;
+    @Column(name="timeofmeasure", nullable = false)
+    private Time timeofmeasure;
+    @Column(name="dateofmeasure", nullable = false)
+    private Date dateofmeasure;
 
     @Column(name="energy_consumption", nullable = false)
     private int energyConsumption;
@@ -35,9 +36,9 @@ public class Measurements implements Serializable {
     public Measurements(){
 
     }
-    public Measurements(Time timestamp,Date datem, int energyConsumption){
-        this.timestamp=timestamp;
-        this.datem=datem;
+    public Measurements(Time timeofmeasure,Date dateofmeasure, int energyConsumption){
+        this.timeofmeasure=timeofmeasure;
+        this.dateofmeasure=dateofmeasure;
         this.energyConsumption=energyConsumption;
     }
 }

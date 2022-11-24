@@ -8,12 +8,16 @@ const columns = [
         accessor: 'id',
     },
     {
+        Header: 'Named',
+        accessor: 'named',
+    },
+    {
         Header: 'Description',
         accessor: 'description',
     },
     {
-        Header: 'Address',
-        accessor: 'address',
+        Header: 'Location',
+        accessor: 'location',
     },
     {
         Header: 'Consumption',

@@ -19,13 +19,13 @@ public class Device implements Serializable {
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
     @Type(type = "uuid-binary")
     private UUID id;
-    // id, description, address, maximum hourly energy consumption
-
+    @Column(name="named", nullable = false)
+    private String named;
     @Column(name="description", nullable = false)
     private String description;
 
-    @Column(name="address", nullable = false)
-    private String address;
+    @Column(name="location", nullable = false)
+    private String location;
 
     @Column(name="hourly_consumption", nullable = false)
     private int consumption;
@@ -39,9 +39,10 @@ public class Device implements Serializable {
     public Device(){
 
     }
-    public Device(String description, String address, int consumption){
+    public Device(String named,String description, String location, int consumption){
+        this.named=named;
         this.description=description;
-        this.address=address;
+        this.location=location;
         this.consumption=consumption;
         measurements=new ArrayList<>();
     }

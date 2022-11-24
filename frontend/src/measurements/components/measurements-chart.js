@@ -1,70 +1,71 @@
-/* App.js */
-import React, { Component } from 'react';
-import CanvasJSReact from "../../commons/canvasjs.react";
-var CanvasJS = CanvasJSReact.CanvasJS;
-var CanvasJSChart = CanvasJSReact.CanvasJSChart;
+import React from "react";
+import { Chart } from "react-google-charts";
+import {useState} from "react";
+import RestApiClient from "../../commons/api/rest-client";
 
-async function extractChart(id){
-    return fetch('http://localhost:8082/measurements/chart/'+id, {
+
+function getMeasurementsC(id,dateWanted,callback) {
+    let request = new Request('http://localhost:8082/measurements/chartm/'+id+"/"+dateWanted, {
         method: 'GET',
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    })
-        .then(data => data.json())
+    });
+    console.log(request.url);
+    RestApiClient.performRequest(request, callback);
 }
+async function extractChart(id,dateWanted){
+    return getMeasurementsC(id,dateWanted,(result, status, err) => {
 
-class ChartM extends Component {
-    render() {
+
+        if (result !== null && status === 200) {
+            localStorage.setItem('chartdata', JSON.stringify(result.listData))
+        }
+        else {
+            console.log( err)
+        }
+    });
+}
+export const options = {
+    chart: {
+        title: "My devices consuption"
+    },
+};
+
+export function Barchart() {
+    const [dateWanted, setdateWanted] = useState();
+    const [res, setRes]=useState();
+    const handleSubmit = async e => {
+        e.preventDefault();
         const savedItem = localStorage.getItem("credentials");
         const parsedItem = JSON.parse(savedItem);
-        const res=extractChart(parsedItem.id);
-        console.log(res);
-        console.log("it worked");
-        const options = {
-            animationEnabled: true,
-            theme: "light2",
-            title:{
-                text: "Most Popular Social Networking Sites"
-            },
-            axisX: {
-                title: "Social Network",
-                reversed: true,
-            },
-            axisY: {
-                title: "Monthly Active Users",
-                includeZero: true,
-                labelFormatter: this.addSymbols
-            },
-            data: [{
-                type: "bar",
-                dataPoints: [
-                    { y:  2200000000, label: "Facebook" },
-                    { y:  1800000000, label: "YouTube" },
-                    { y:  800000000, label: "Instagram" },
-                    { y:  563000000, label: "Qzone" },
-                    { y:  376000000, label: "Weibo" },
-                    { y:  336000000, label: "Twitter" },
-                    { y:  330000000, label: "Reddit" }
-                ]
-            }]
-        }
-        return (
-            <div>
-                <CanvasJSChart options = {options}
-                    /* onRef={ref => this.chart = ref} */
-                />
-                {/*You can get reference to the chart instance as shown above using onRef. This allows you to access all chart properties and methods*/}
-            </div>
-        );
+        extractChart(parsedItem.id,dateWanted);
+        const savedItem2 = localStorage.getItem("chartdata");
+        const parsedItem2= JSON.parse(savedItem2);
+        setRes(parsedItem2);
+
     }
-    addSymbols(e){
-        var suffixes = ["", "K", "M", "B"];
-        var order = Math.max(Math.floor(Math.log(e.value) / Math.log(1000)), 0);
-        if(order > suffixes.length - 1)
-            order = suffixes.length - 1;
-        var suffix = suffixes[order];
-        return CanvasJS.formatNumber(e.value / Math.pow(1000, order)) + suffix;
-    }
+
+    return (
+        <div className="chart-wrapper">
+            <p>Please write the date for which you want to see the chart's informations</p>
+            <form onSubmit={handleSubmit}>
+                <label>
+                    <p>date wanted</p>
+                    <input type="text" onChange={e => setdateWanted(e.target.value)}/>
+                </label>
+                <br/>
+                <div>
+                    <button type="submit" onClick={ handleSubmit}>See</button>
+                </div>
+            </form>
+
+        <Chart
+            chartType="Bar"
+            width="100%"
+            height="400px"
+            data={res}
+            options={options}
+        />
+        </div>
+    );
 }
-export default ChartM;
+
+

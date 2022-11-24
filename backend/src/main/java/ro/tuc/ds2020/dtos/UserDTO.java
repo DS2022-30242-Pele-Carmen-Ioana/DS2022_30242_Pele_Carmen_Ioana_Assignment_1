@@ -11,7 +11,8 @@ import java.util.UUID;
 @Setter
 public class UserDTO extends RepresentationModel<UserDTO> {
     private UUID id;
-    private String name;
+    private String firstname;
+    private String lastname;
     private String password;
     private String username;
     private String address;
@@ -21,9 +22,10 @@ public class UserDTO extends RepresentationModel<UserDTO> {
     public UserDTO(){
 
     }
-    public UserDTO(UUID id, String name, String address, int age, String role,String password,String username){
+    public UserDTO(UUID id, String firstname, String lastname, String address, int age, String role,String password,String username){
         this.id=id;
-        this.name=name;
+        this.firstname=firstname;
+        this.lastname=lastname;
         this.address=address;
         this.age=age;
         this.role=role;
@@ -35,9 +37,9 @@ public class UserDTO extends RepresentationModel<UserDTO> {
         if (this == o) return true;
         if (o==null || getClass()!=o.getClass()) return false;
         UserDTO userDTO=(UserDTO) o;
-        return (Objects.equals(name, userDTO.name) && Objects.equals(address, userDTO.address) && Objects.equals(age, userDTO.age) && Objects.equals(role, userDTO.role));
+        return (Objects.equals(firstname, userDTO.firstname) && Objects.equals(lastname, userDTO.lastname) && Objects.equals(address, userDTO.address) && Objects.equals(age, userDTO.age) && Objects.equals(role, userDTO.role));
     }
     @Override
-    public int hashCode(){return Objects.hash(id, name);}
+    public int hashCode(){return Objects.hash(id, firstname, lastname);}
 
 }

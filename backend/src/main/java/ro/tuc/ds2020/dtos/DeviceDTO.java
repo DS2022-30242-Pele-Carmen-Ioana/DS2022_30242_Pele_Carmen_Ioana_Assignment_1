@@ -10,17 +10,19 @@ import java.util.UUID;
 @Setter
 public class DeviceDTO extends RepresentationModel<DeviceDTO> {
     private UUID id;
+    private String named;
     private String description;
-    private String address;
+    private String location;
     private int consumption;
 
     public DeviceDTO(){
 
     }
-    public DeviceDTO(UUID id, String description, String address, int consumption){
+    public DeviceDTO(UUID id,String named, String description, String location, int consumption){
         this.id=id;
+        this.named=named;
         this.description=description;
-        this.address=address;
+        this.location=location;
         this.consumption=consumption;
     }
 
@@ -29,7 +31,7 @@ public class DeviceDTO extends RepresentationModel<DeviceDTO> {
         if (this == o) return true;
         if (o==null || getClass()!=o.getClass()) return false;
         DeviceDTO deviceDTO=(DeviceDTO) o;
-        return (Objects.equals(description, deviceDTO.description) && Objects.equals(address, deviceDTO.description) && Objects.equals(consumption, deviceDTO.consumption));
+        return (Objects.equals(description, deviceDTO.description) && Objects.equals(location, deviceDTO.location) && Objects.equals(consumption, deviceDTO.consumption));
     }
     @Override
     public int hashCode(){return Objects.hash(id, description);}

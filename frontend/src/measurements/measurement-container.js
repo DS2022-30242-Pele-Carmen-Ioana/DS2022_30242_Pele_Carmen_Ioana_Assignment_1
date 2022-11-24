@@ -15,6 +15,7 @@ import {
 import * as API_MEASUREMENTS from "./api/measurement-api"
 import MeasurementTable from "./components/measurement-table";
 import MeasurementForm from "./components/measurement-form";
+import MD from "../device/measurement-device";
 
 
 
@@ -91,6 +92,12 @@ class MeasurementContainer extends React.Component {
                                 errorStatus={this.state.errorStatus}
                                 error={this.state.error}
                             />   }
+                        </Col>
+                    </Row>
+                    <br/>
+                    <Row>
+                        <Col sm={{size: '4', offset: 1, align:'center'}}>
+                            <MD/>
                         </Col>
                     </Row>
                 </Card>

@@ -21,8 +21,10 @@ public class Users implements Serializable {
     private UUID id;
     //id, name, role:admin/client
 
-    @Column(name="name", nullable = false)
-    private String name;
+    @Column(name="firstname", nullable = false)
+    private String firstname;
+    @Column(name="lastname", nullable = false)
+    private String lastname;
     @Column(name="username", nullable = false, unique = true)
     private String username;
     @Column(name="password", nullable = false)
@@ -41,8 +43,9 @@ public class Users implements Serializable {
     public Users(){
 
     }
-    public Users(String name, String role, String address, int age){
-        this.name=name;
+    public Users(String firstname,String lastname, String role, String address, int age){
+        this.firstname=firstname;
+        this.lastname=lastname;
         this.role=role;
         this.address=address;
         this.age=age;

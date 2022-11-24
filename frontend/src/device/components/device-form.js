@@ -30,6 +30,15 @@ class DeviceForm extends React.Component {
                         isRequired: true
                     }
                 },
+                named: {
+                    value: '',
+                    placeholder: 'name of device',
+                    valid: false,
+                    touched: false,
+                    validationRules: {
+                        isRequired: true
+                    }
+                },
                 description: {
                     value: '',
                     placeholder: 'description',
@@ -39,9 +48,9 @@ class DeviceForm extends React.Component {
                         isRequired: true
                     }
                 },
-                address: {
+                location: {
                     value: '',
-                    placeholder: 'address...',
+                    placeholder: 'location...',
                     valid: false,
                     touched: false,
                     validationRules: {
@@ -138,8 +147,9 @@ class DeviceForm extends React.Component {
     }
     handleSubmit() {
         let device = {
+            named:this.state.formControls.named.value,
             description: this.state.formControls.description.value,
-            address: this.state.formControls.address.value,
+            location: this.state.formControls.location.value,
             consumption: this.state.formControls.consumption.value
         };
 
@@ -148,8 +158,9 @@ class DeviceForm extends React.Component {
     }
     handleSubmitUpdate() {
         let device = {
+            named:this.state.formControls.named.value,
             description: this.state.formControls.description.value,
-            address: this.state.formControls.address.value,
+            location: this.state.formControls.location.value,
             consumption: this.state.formControls.consumption.value
         };
         let id={
@@ -179,11 +190,19 @@ class DeviceForm extends React.Component {
                            valid={this.state.formControls.id.valid}
                            required
                     />
-                    {this.state.formControls.id.touched && !this.state.formControls.id.valid &&
-                        <div className={"error-message row"}> * Name must have at least 3 characters </div>}
+                </FormGroup>
+                <FormGroup id='named'>
+                    <Label for='namedField'> Name: </Label>
+                    <Input name='named' id='namedField' placeholder={this.state.formControls.named.placeholder}
+                           onChange={this.handleChange}
+                           defaultValue={this.state.formControls.named.value}
+                           touched={this.state.formControls.named.touched? 1 : 0}
+                           valid={this.state.formControls.named.valid}
+                           required
+                    />
                 </FormGroup>
                 <FormGroup id='description'>
-                    <Label for='descriptionField'> Name: </Label>
+                    <Label for='descriptionField'> Description: </Label>
                     <Input name='description' id='descriptionField' placeholder={this.state.formControls.description.placeholder}
                            onChange={this.handleChange}
                            defaultValue={this.state.formControls.description.value}
@@ -191,22 +210,20 @@ class DeviceForm extends React.Component {
                            valid={this.state.formControls.description.valid}
                            required
                     />
-                    {this.state.formControls.description.touched && !this.state.formControls.description.valid &&
-                    <div className={"error-message row"}> * Name must have at least 3 characters </div>}
                 </FormGroup>
 
-                <FormGroup id='address'>
-                    <Label for='addressField'> Address: </Label>
-                    <Input name='address' id='addressField' placeholder={this.state.formControls.address.placeholder}
+                <FormGroup id='location'>
+                    <Label for='locationField'> Location: </Label>
+                    <Input name='location' id='locationField' placeholder={this.state.formControls.location.placeholder}
                            onChange={this.handleChange}
-                           defaultValue={this.state.formControls.address.value}
-                           touched={this.state.formControls.address.touched? 1 : 0}
-                           valid={this.state.formControls.address.valid}
+                           defaultValue={this.state.formControls.location.value}
+                           touched={this.state.formControls.location.touched? 1 : 0}
+                           valid={this.state.formControls.location.valid}
                            required
                     />
                 </FormGroup>
                 <FormGroup id='consumption'>
-                    <Label for='consumptionField'> Role: </Label>
+                    <Label for='consumptionField'> Consumption: </Label>
                     <Input name='consumption' id='consumptionField' placeholder={this.state.formControls.consumption.placeholder}
                            min={0} max={100} type="number"
                            onChange={this.handleChange}
@@ -220,7 +237,7 @@ class DeviceForm extends React.Component {
 
                     <Row>
                         <Col sm={{size: '4', offset: 8}}>
-                            <Button type={"submit"} disabled={!this.state.formIsValid} onClick={this.handleSubmit}>  Insert </Button>
+                            <Button type={"submit"} disabled={!this.state.formControls.named.valid || !this.state.formControls.description.valid || !this.state.formControls.location.valid || !this.state.formControls.consumption.valid} onClick={this.handleSubmit}>  Insert </Button>
                         </Col>
                         <Col sm={{size: '4', offset: 8}}>
                             <Button type={"submit"} disabled={!this.state.formIsValid} onClick={this.handleSubmitUpdate}> Update </Button>

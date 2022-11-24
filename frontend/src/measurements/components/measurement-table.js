@@ -8,12 +8,12 @@ const columns = [
         accessor: 'id',
     },
     {
-        Header: 'Timetamp',
-        accessor: 'timestamp',
+        Header: 'TimeOfMeasure',
+        accessor: 'timeofmeasure',
     },
     {
-        Header: 'DateM',
-        accessor: 'datem',
+        Header: 'DateOfMeasure',
+        accessor: 'dateofmeasure',
     },
     {
         Header: 'Energy Consumption',
